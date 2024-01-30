@@ -16,6 +16,17 @@ const Products = (props) => {
   );
 };
 
+
+
+export const screenOption = (navData) => {
+  return {
+      headerTitle: navData.route.params.pokemon.name
+  }
+}
+
+
+
+
 const styles = StyleSheet.create({
     image: {width:200, height:300},
   btn: {

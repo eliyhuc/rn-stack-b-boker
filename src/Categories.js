@@ -1,6 +1,14 @@
 import react, {useState, useEffect} from "react";
 import axios from "axios";
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity, ActivityIndicator } from "react-native";
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { 
+    View, 
+    Text, 
+    ScrollView, 
+    StyleSheet, 
+    TouchableOpacity, 
+    FlatList,
+    ActivityIndicator } from "react-native";
 
 const Categories = (props) => {
 
@@ -25,7 +33,6 @@ const Categories = (props) => {
 
 
   return (
-    <ScrollView>
     <View style={styles.container}>
         {
             isLoading 
@@ -33,25 +40,32 @@ const Categories = (props) => {
                 <ActivityIndicator size='large' color='#ffffff' />
             </>) 
             : (<>
-                {
-                    pokemons.length > 0 && (<>
-                    {
-                        pokemons.map(pokemon => 
-                            <TouchableOpacity
-                                onPress={() => {props.navigation.navigate("products", {pokemon})}}
-                                key={pokemon.id} 
-                                style={styles.row}>
-                                <Text>{pokemon.name}</Text>
-                            </TouchableOpacity>)
-                    }
-                    </>)
-                }
+                <FlatList style={{width:'100%'}}
+                    data={pokemons}
+                    keyExtractor={item => item.id}
+                    renderItem={itemRow => 
+                    <TouchableOpacity 
+                        onPress={() => {props.navigation.navigate("products", 
+                            {pokemon: itemRow.item})}} style={styles.row}>
+                        <Text>{itemRow.item.name}</Text>
+                    </TouchableOpacity>}
+                />
             </>)
         }
     </View>
-    </ScrollView>
   );
 };
+
+
+export const screenOption = (navData) => {
+    return {
+        headerTitle: 'Pokemons',
+        headerRight: () => (<Ionicons onPress={() =>
+             {navData.navigation.navigate("productInfo")}} 
+             name="chatbubble-ellipses-outline" size={30} color='#ffffff' />)
+    }
+}
+
 
 const styles = StyleSheet.create({
 

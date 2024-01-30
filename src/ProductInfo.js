@@ -23,4 +23,13 @@ const styles = StyleSheet.create({
   },
 });
 
+
+
+export const screenOption = () => {
+  return {
+      headerTitle: 'Product Info'
+  }
+}
+
+
 export default ProductInfo;
